@@ -1,0 +1,33 @@
+{
+  "name": "ndb-react-components",
+  "version": "0.1.0",
+  "repository": "https://github.com/MouseLightDataBrowser/react-components.git",
+  "author": "Patrick Edson <pedson@leapscientific.com>",
+  "license": "Janelia",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "tsc",
+    "prepublish": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "rc-slider": "^8.1.2",
+    "react": "^15.6.0",
+    "react-autosuggest": "^9.0.1",
+    "react-bootstrap": "^0.31.0",
+    "react-datepicker": "^0.47.0",
+    "react-select": "^1.0.0-rc.5",
+    "react-virtualized": "^9.8.0",
+    "react-virtualized-select": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.31",
+    "@types/react": "^15.0.28",
+    "@types/react-autosuggest": "^8.0.1",
+    "@types/react-bootstrap": "^0.0.50",
+    "@types/react-datepicker": "^0.46.0",
+    "@types/react-select": "^1.0.45",
+    "@types/react-virtualized": "^9.7.0"
+  }
+}
