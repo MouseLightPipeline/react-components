@@ -30,7 +30,8 @@ export declare class DynamicEditField extends React.Component<IDynamicEditFieldP
     private onCancelEdit;
     private onCanAcceptEdit();
     private onAcceptEdit();
-    private onValueChanged;
+    private onValueChanged(event);
+    private onKeyPress(event);
     private format;
     private overlayControl;
     componentWillReceiveProps(props: IDynamicEditFieldProps): void;

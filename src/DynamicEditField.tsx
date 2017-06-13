@@ -82,7 +82,7 @@ export class DynamicEditField extends React.Component<IDynamicEditFieldProps, ID
         }
     };
 
-    private onValueChanged = (event: any) => {
+    private onValueChanged(event: any) {
         let value = event.target.value;
 
         let feedback = this.state.feedback;
@@ -99,6 +99,12 @@ export class DynamicEditField extends React.Component<IDynamicEditFieldProps, ID
             this.setState({value, feedback}, null);
         } else {
             this.setState({feedback}, null);
+        }
+    };
+
+    private async onKeyPress(event: any) {
+        if ((event.charCode || event.which) == 13) {
+            await this.onAcceptEdit();
         }
     };
 
@@ -156,7 +162,8 @@ export class DynamicEditField extends React.Component<IDynamicEditFieldProps, ID
                         <FormControl type="text" style={this.state.feedback ? {color: "red"} : {}}
                                      value={this.format(this.state.value)}
                                      placeholder={this.props.placeHolder}
-                                     onChange={this.onValueChanged}/>
+                                     onKeyPress={(evt) => this.onKeyPress(evt)}
+                                     onChange={(evt) => this.onValueChanged(evt)}/>
                         <InputGroup.Button>
                             <Button bsStyle="success"
                                     disabled={!this.onCanAcceptEdit()}
