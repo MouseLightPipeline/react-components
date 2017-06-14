@@ -26,6 +26,7 @@ export interface IDynamicSelectProps<T, S, U> {
 export interface IDynamicSelectState<T> {
     isInEditMode?: boolean;
     selectedOption?: T;
+    isOpen?: boolean;
 }
 export declare class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectProps<T, S, U>, IDynamicSelectState<S>> {
     constructor(props: IDynamicSelectProps<T, S, U>);
@@ -45,6 +46,7 @@ export declare class DynamicSelect<T, S, P, U> extends React.Component<IDynamicS
     protected addToSelection(option: any, selection: any): any;
     protected filterOptions?(options: Option[], filterValue: string, currentValues: Option[]): Option[];
     protected filterOption?(option: string, filter: string): boolean;
+    protected onInputKeyDown(event: any): void;
     protected renderSelect(selected: Option, options: Option[], isInputGroup?: boolean): JSX.Element;
     private renderAddButton();
     render(): JSX.Element;

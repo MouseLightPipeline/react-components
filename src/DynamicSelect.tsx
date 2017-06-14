@@ -33,6 +33,7 @@ export interface IDynamicSelectProps<T, S, U> {
 export interface IDynamicSelectState<T> {
     isInEditMode?: boolean;
     selectedOption?: T;
+    isOpen?: boolean;
 }
 // T Defines individual options (e.g., ISample)
 // S Defines selected options (e.g., ISample for single select, ISample[] for multi-select)
@@ -43,7 +44,7 @@ export class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectPro
     public constructor(props: IDynamicSelectProps<T, S, U>) {
         super(props);
 
-        this.state = {isInEditMode: false, selectedOption: props.selectedOption};
+        this.state = {isInEditMode: false, selectedOption: props.selectedOption, isOpen: false};
     }
 
     protected findSelectedObject(option: P): S {
@@ -135,37 +136,41 @@ export class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectPro
         return true;
     }
 
+    protected onInputKeyDown(event: any) {
+        switch (event.keyCode) {
+            case 13: // ENTER
+                if (!this.state.isOpen && this.state.isInEditMode && this.props.isDeferredEditMode) {
+                    this.onAcceptEdit();
+                    event.preventDefault();
+                }
+                break;
+        }
+    }
 
     protected renderSelect(selected: Option, options: Option[], isInputGroup: boolean = false) {
         const style = isInputGroup ? {borderRadius: 0} : {};
+
+        const props = {
+            name: `${this.props.idName}-select`,
+            placeholder: this.props.placeholder || "Select...",
+            value: selected,
+            options: options,
+            clearable: this.props.clearable,
+            disabled: this.props.disabled,
+            multi: this.props.multiSelect,
+            style: style,
+            filterOption: (option: string, filter: string) => this.filterOption(option, filter),
+            filterOptions: (options: Option[], filterValue: string, currentValues: Option[]) => this.filterOptions(options, filterValue, currentValues),
+            onChange: (option: P) => this.onSelectChange(option),
+            onInputKeyDown: (event: any) => this.onInputKeyDown(event),
+            onOpen: () => this.setState({isOpen: true}),
+            onClose: () => this.setState({isOpen: false})
+        };
+
         return this.props.useVirtualized ? (
-            <VirtualizedSelect
-                name={`${this.props.idName}-select`}
-                placeholder={this.props.placeholder || "Select..."}
-                value={selected}
-                options={options}
-                clearable={this.props.clearable}
-                disabled={this.props.disabled}
-                multi={this.props.multiSelect}
-                style={style}
-                filterOption={(option: string, filter: string) => this.filterOption(option, filter)}
-                filterOptions={(options: Option[], filterValue: string, currentValues: Option[]) => this.filterOptions(options, filterValue, currentValues)}
-                onChange={(option: P) => this.onSelectChange(option)}
-            />
+            <VirtualizedSelect {...props}/>
         ) : (
-            <ReactSelectClass
-                name={`${this.props.idName}-select`}
-                placeholder={this.props.placeholder || "Select..."}
-                value={selected}
-                options={options}
-                clearable={this.props.clearable}
-                disabled={this.props.disabled}
-                multi={this.props.multiSelect}
-                style={style}
-                filterOption={(option: string, filter: string) => this.filterOption(option, filter)}
-                filterOptions={(options: Option[], filterValue: string, currentValues: Option[]) => this.filterOptions(options, filterValue, currentValues)}
-                onChange={(option: P) => this.onSelectChange(option)}
-            />
+            <ReactSelectClass {...props}/>
         );
     }
 
