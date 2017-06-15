@@ -1,6 +1,6 @@
 {
   "name": "ndb-react-components",
-  "version": "0.1.9",
+  "version": "0.1.12",
   "repository": "https://github.com/MouseLightDataBrowser/react-components.git",
   "author": "Patrick Edson <pedson@leapscientific.com>",
   "license": "Janelia",
@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rm -rf lib",
     "build": "tsc && npm run styles",
-    "styles": "cpx src/style.css lib/",
+    "styles": "cpx styles/**/*.css lib/styles/",
     "prepublish": "npm run clean && npm run build"
   },
   "peerDependencies": {
