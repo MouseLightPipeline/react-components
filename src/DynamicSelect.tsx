@@ -15,6 +15,7 @@ export interface IDynamicSelectProps<T, S, U> {
     idName: string;
     isExclusiveEditMode?: boolean;
     isDeferredEditMode?: boolean;
+    isCustomInputGroup?: boolean;
     options: T[];
     selectedOption: S;
     disabled?: boolean;
@@ -207,7 +208,7 @@ export class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectPro
 
         if (this.isInEditMode) {
             if (!this.isDeferredEditMode) {
-                return this.renderSelect(selection, options);
+                return this.renderSelect(selection, options, this.props.isCustomInputGroup);
             } else {
                 return (
                     <FormGroup style={style}>

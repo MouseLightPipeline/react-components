@@ -10,6 +10,7 @@ export interface IDynamicSelectProps<T, S, U> {
     idName: string;
     isExclusiveEditMode?: boolean;
     isDeferredEditMode?: boolean;
+    isCustomInputGroup?: boolean;
     options: T[];
     selectedOption: S;
     disabled?: boolean;
