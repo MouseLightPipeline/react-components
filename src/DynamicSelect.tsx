@@ -15,7 +15,8 @@ export interface IDynamicSelectProps<T, S, U> {
     idName: string;
     isExclusiveEditMode?: boolean;
     isDeferredEditMode?: boolean;
-    isCustomInputGroup?: boolean;
+    hasLeftInputGroup?: boolean;
+    hasRightInputGroup?: boolean;
     options: T[];
     selectedOption: S;
     disabled?: boolean;
@@ -148,8 +149,16 @@ export class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectPro
         }
     }
 
-    protected renderSelect(selected: Option, options: Option[], isInputGroup: boolean = false) {
-        const style = isInputGroup ? {borderRadius: 0} : {};
+    protected renderSelect(selected: Option, options: Option[], hasLeftInputGroup: boolean, hasRightInputGroup: boolean) {
+        let style = {};
+
+        if (hasLeftInputGroup && hasRightInputGroup) {
+            style = {borderRadius: "0px"}
+        } else if (hasLeftInputGroup) {
+            style = {borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px"}
+        } else if (hasRightInputGroup) {
+            style = {borderTopRightRadius: "0px", borderBottomRightRadius: "0px"}
+        }
 
         const props = {
             name: `${this.props.idName}-select`,
@@ -208,7 +217,7 @@ export class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectPro
 
         if (this.isInEditMode) {
             if (!this.isDeferredEditMode) {
-                return this.renderSelect(selection, options, this.props.isCustomInputGroup);
+                return this.renderSelect(selection, options, this.props.hasLeftInputGroup, this.props.hasRightInputGroup);
             } else {
                 return (
                     <FormGroup style={style}>
@@ -218,7 +227,7 @@ export class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectPro
                                     <Glyphicon glyph="remove"/>
                                 </Button>
                             </InputGroup.Button>
-                            {this.renderSelect(selection, options, true)}
+                            {this.renderSelect(selection, options, true, true)}
                             {this.renderAddButton()}
                             <InputGroup.Button>
                                 <Button bsStyle="success" onClick={() => this.onAcceptEdit()}>

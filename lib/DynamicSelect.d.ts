@@ -10,7 +10,8 @@ export interface IDynamicSelectProps<T, S, U> {
     idName: string;
     isExclusiveEditMode?: boolean;
     isDeferredEditMode?: boolean;
-    isCustomInputGroup?: boolean;
+    hasLeftInputGroup?: boolean;
+    hasRightInputGroup?: boolean;
     options: T[];
     selectedOption: S;
     disabled?: boolean;
@@ -48,7 +49,7 @@ export declare class DynamicSelect<T, S, P, U> extends React.Component<IDynamicS
     protected filterOptions?(options: Option[], filterValue: string, currentValues: Option[]): Option[];
     protected filterOption?(option: string, filter: string): boolean;
     protected onInputKeyDown(event: any): void;
-    protected renderSelect(selected: Option, options: Option[], isInputGroup?: boolean): JSX.Element;
+    protected renderSelect(selected: Option, options: Option[], hasLeftInputGroup: boolean, hasRightInputGroup: boolean): JSX.Element;
     private renderAddButton();
     render(): JSX.Element;
 }
