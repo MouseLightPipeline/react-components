@@ -6,6 +6,7 @@ import {isNullOrUndefined} from "util";
 import * as rv from "react-virtualized"; // No react-virtualized-select declaration to pull in - keep
 import VirtualizedSelect from "react-virtualized-select"
 import {Option} from "react-select";
+import {CSSProperties} from "react";
 
 export interface IDynamicSelectOption {
     id?: string | number;
@@ -24,6 +25,7 @@ export interface IDynamicSelectProps<T, S, U> {
     multiSelect?: boolean;
     clearable?: boolean;
     useVirtualized?: boolean;
+    style?: CSSProperties,
     userData?: U;
 
     filterOptions?(options: Option[], filterValue: string, currentValues: Option[]): Option[];
@@ -150,14 +152,16 @@ export class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectPro
     }
 
     protected renderSelect(selected: Option, options: Option[], hasLeftInputGroup: boolean, hasRightInputGroup: boolean) {
-        let style = {};
+        let style = this.props.style || {};
 
         if (hasLeftInputGroup && hasRightInputGroup) {
-            style = {borderRadius: "0px"}
+            style["borderRadius"] = "0px"
         } else if (hasLeftInputGroup) {
-            style = {borderTopLeftRadius: "0px", borderBottomLeftRadius: "0px"}
+            style["borderTopLeftRadius"] = "0px";
+            style["borderBottomLeftRadius"] = "0px";
         } else if (hasRightInputGroup) {
-            style = {borderTopRightRadius: "0px", borderBottomRightRadius: "0px"}
+            style["borderTopRightRadius"] = "0px";
+            style["borderBottomRightRadius"] = "0px";
         }
 
         const props = {

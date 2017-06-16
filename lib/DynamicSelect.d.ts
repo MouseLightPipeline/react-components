@@ -1,8 +1,9 @@
-/// <reference types="react-select" />
 /// <reference types="react" />
+/// <reference types="react-select" />
 import * as React from "react";
 import * as ReactSelectClass from "react-select";
 import { Option } from "react-select";
+import { CSSProperties } from "react";
 export interface IDynamicSelectOption {
     id?: string | number;
 }
@@ -19,6 +20,7 @@ export interface IDynamicSelectProps<T, S, U> {
     multiSelect?: boolean;
     clearable?: boolean;
     useVirtualized?: boolean;
+    style?: CSSProperties;
     userData?: U;
     filterOptions?(options: Option[], filterValue: string, currentValues: Option[]): Option[];
     filterOption?(option: string, filter: string): boolean;
