@@ -1,13 +1,15 @@
 import * as React from "react";
-import {Modal, Button} from "react-bootstrap";
+import {Modal, Button, Sizes} from "react-bootstrap";
 
 export type ModalAlertStyle = "default" | "success" | "info" | "warning" | "danger";
 
 export interface IModalAlertProps {
+    modalId?: string;
     show: boolean;
     style?: ModalAlertStyle;
+    bsSize?: Sizes;
     header?: React.Component<any, any> | string;
-    message?: React.Component<any, any> | string;
+    message?: string;
     canCancel?: boolean;
     acknowledgeContent?: React.Component<any, any> | string;
 
@@ -24,7 +26,7 @@ export class ModalAlert extends React.Component<IModalAlertProps, IModalAlertSta
             if (this.props.header instanceof String || typeof this.props.header === "string") {
                 return (
                     <Modal.Header closeButton>
-                        <Modal.Title id="create-registration-dialog">{this.props.header}</Modal.Title>
+                        <Modal.Title id={this.props.modalId || "alert"}>{this.props.header}</Modal.Title>
                     </Modal.Header>
                 );
             } else {
@@ -53,13 +55,14 @@ export class ModalAlert extends React.Component<IModalAlertProps, IModalAlertSta
 
     public render() {
         const alertStyle = this.props.style || "default";
+        const bsSize = this.props.bsSize || null;
 
         return (
-            <Modal show={this.props.show} onHide={this.props.onCancel}
-                   aria-labelledby="create-registration-dialog">
+            <Modal show={this.props.show} onHide={this.props.onCancel} bsSize={bsSize} aria-labelledby={this.props.modalId || "alert"}>
                 {this.renderHeader()}
                 <Modal.Body>
                     {this.props.message}
+                    {this.props.children}
                 </Modal.Body>
                 <Modal.Footer>
                     {this.props.canCancel ? <Button onClick={this.props.onCancel}>Cancel</Button> : null}
