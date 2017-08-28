@@ -19,6 +19,7 @@ export interface IDynamicSelectProps<T, S, U> {
     placeholder?: string;
     multiSelect?: boolean;
     clearable?: boolean;
+    searchable?: boolean;
     useVirtualized?: boolean;
     style?: CSSProperties;
     userData?: U;

@@ -24,6 +24,7 @@ export interface IDynamicSelectProps<T, S, U> {
     placeholder?: string;
     multiSelect?: boolean;
     clearable?: boolean;
+    searchable?: boolean;
     useVirtualized?: boolean;
     style?: CSSProperties,
     userData?: U;
@@ -170,6 +171,7 @@ export class DynamicSelect<T, S, P, U> extends React.Component<IDynamicSelectPro
             value: selected,
             options: options,
             clearable: this.props.clearable,
+            searchable: this.props.searchable !== false,
             disabled: this.props.disabled,
             multi: this.props.multiSelect,
             style: style,
